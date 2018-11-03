@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+/* table {
+	border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	text-align: center;
+	width: 80%
+}
+
+table tr, table td {
+	border: 1px solid #cad9ea;
+	color: #666;
+	height:40px;
+}
+
+ 
+table tr:nth-child(even) {
+	background: #F5FAFA;
+} */
+
+.content {
+    
+    height:200px;
+    background-image: url("../img/pets.png");
+    background-repeat: no-repeat;
+    
+}
+
+
+table {
+
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	text-align: center;
+	width: 80%
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: rgb(25,138,241);
+    color: white;
+}
+
+span{
+	margin:5px;
+}
+
+
+
+
+
+
+
