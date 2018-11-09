@@ -8,6 +8,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "COMMENT_TABLE")
+
+/*Création de la table commentaire du site*/
+
 public class Comment {
 	
 	@Id

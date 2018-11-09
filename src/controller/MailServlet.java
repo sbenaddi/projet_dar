@@ -25,7 +25,6 @@ public class MailServlet extends HttpServlet {
 		
 
 		public void init() {
-			// reads SMTP server setting from web.xml file
 			
 		}
 
@@ -51,7 +50,7 @@ public class MailServlet extends HttpServlet {
 				CommentDao commentDao = new CommentDao();
 				List<Comment> comments = commentDao.find();
 				request.setAttribute("listeComments", comments);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/index1.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/index.jsp");
 				dispatcher.forward(request, response);
 			}
 		}

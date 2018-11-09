@@ -3,6 +3,9 @@ package model.service;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UtilsService {
+	
+	/*Hashage du mot de passe */
+	
    public String hash(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt(8));
     }

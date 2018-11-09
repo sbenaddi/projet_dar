@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class MailService {
 
-
+/*Envoyer un e-mail a partir de la page index pour demander des informations */
 	
 		public  void sendEmails( 
 				String subject, String content) {

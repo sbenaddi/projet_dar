@@ -24,6 +24,7 @@ import model.dao.UtilsDao;
 
 public class UploadServlet extends HttpServlet {
 
+	//photo pour les utilisateurs
 	
 	public static final String CHAMP_ACTION_ID = "actionId";
 	public static final String SAVE_AVATAR  = "saveAvatar";
@@ -54,8 +55,8 @@ public class UploadServlet extends HttpServlet {
 		
 		if(SAVE_AVATAR.equals(actionId)) {
 			/* Update Imqge */
-			Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-		    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+			Part filePart = request.getPart("file"); 
+		    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); 
 		    InputStream fileContent = filePart.getInputStream();
 		    byte[] bytes = IOUtils.toByteArray(fileContent);
 		    Avatar avatar = new Avatar(fileName, bytes);
@@ -67,10 +68,8 @@ public class UploadServlet extends HttpServlet {
 		    request.setAttribute("user", user);
 		    output = "SUCCESS";
 		}
-		//response.setContentType("text/html;charset=UTF-8");
-		//ServletOutputStream out = response.getOutputStream();
-		//out.print(output);	
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/updateprofile.jsp");
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/updateprofile.jsp");
 		dispatcher.forward(request, response);		
 	}
 
@@ -86,7 +85,6 @@ public class UploadServlet extends HttpServlet {
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

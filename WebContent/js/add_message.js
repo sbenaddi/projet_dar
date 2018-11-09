@@ -1,4 +1,5 @@
 function addMsg() {
+	// message de confirmation du msg
 	$.ajax({
 				"url" : "message",
 				"type" : "post",
@@ -12,10 +13,17 @@ function addMsg() {
 
 				"dataType" : "text",
 				"success" : function(data) {
-					var obj = window.parent.document.getElementById("iframe");
+					//var obj = window.parent.document.getElementById("iframe");
 					// obj.src = "message.jsp";
-					obj.src = "message.jsp";
+					//obj.src = "message.jsp";
 
+					swal({
+						  position: 'top-end',
+						  type: 'success',
+						  title: 'Votre message est Enregistré ',
+						  showConfirmButton: false,
+						  timer: 2000
+						});
 				}
 			});
 

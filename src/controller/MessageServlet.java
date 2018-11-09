@@ -146,9 +146,14 @@ public class MessageServlet extends HttpServlet {
 
 			Long id = Long.parseLong(request.getParameter("msg_id"));
 			int dest_id = messageDao.getDepartureUserId(id);
-			response.setContentType("text/plain;charset=UTF-8");
+			UtilisateurDao utilisateurDao = new UtilisateurDao();
+			String name = utilisateurDao.getNameByUserId(dest_id);
+			response.setContentType("application/json;charset=UTF-8");
+			JSONObject res = new JSONObject();
+			res.put("id", dest_id);
+			res.put("name", name);
 			PrintWriter out = response.getWriter();
-			out.println(dest_id);
+			out.println(res);
 			break;
 		}
 		// get the number of the new messages

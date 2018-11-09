@@ -21,8 +21,9 @@ public class Avatar {
 	private String name;
 
 	@Lob
-    @Column(name="IMAGE", nullable=false, columnDefinition="mediumblob")
+	@Column(name = "IMAGE", nullable = false, columnDefinition = "mediumblob")
 	private byte[] image;
+	String base64Image;
 
 	public Avatar() {
 		super();
@@ -32,11 +33,18 @@ public class Avatar {
 		super();
 		this.name = name;
 		this.image = image;
+		base64Image = Base64.getEncoder().encodeToString(image);
+
+	}
+
+	public String getBase64Image() {
+		return base64Image;
 	}
 	
-	public String getBase64Image() {
-		return Base64.getEncoder().encodeToString(image);
+	public void setBase64Image(String base64Image) {
+		this.base64Image = base64Image;
 	}
+
 
 	public long getId() {
 		return id;

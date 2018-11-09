@@ -49,7 +49,7 @@ public class CommentaireServlet extends HttpServlet {
 		case "add_comment":{
 			System.out.println("je suis dans add comment");
 			cd.add_commentaire(email, content, annonce);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/annonce.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/annonce.jsp");
 			dispatcher.forward(request, response);
 			
 			
