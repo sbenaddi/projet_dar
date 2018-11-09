@@ -20,9 +20,7 @@ public class Photo {
 	@GeneratedValue
 	private int id;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "annonce_id", referencedColumnName = "id", nullable = false)
-	private Annonce annonce_id;
+	
     @Column(name="base64Image", nullable=false, columnDefinition="longtext")
 
 	private String base64Image;
@@ -32,9 +30,8 @@ public class Photo {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Photo(byte[] image, Annonce annonce_id) {
+	public Photo(byte[] image) {
 		super();
-		this.annonce_id = annonce_id;
 		base64Image = Base64.getEncoder().encodeToString(image);
 
 	}
@@ -55,12 +52,6 @@ public class Photo {
 	}
 
 	
-	public Annonce getAnnonce_id() {
-		return annonce_id;
-	}
-
-	public void setAnnonce_id(Annonce annonce_id) {
-		this.annonce_id = annonce_id;
-	}
+	
 
 }

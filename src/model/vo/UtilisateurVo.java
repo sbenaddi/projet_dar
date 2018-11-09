@@ -4,6 +4,8 @@ import model.bo.Utilisateur;
 
 public class UtilisateurVo {
 
+	/*Les donnees pour modifier un profil utilisateur */
+	
 	private int id;
 	private String name;
 	private String email;

@@ -3,6 +3,7 @@ package model.bo;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +12,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -38,23 +41,33 @@ public class Annonce {
 	    @JoinColumn (name="id_category",referencedColumnName="id",nullable=false)
 	    private Categorie id_category;
 	  
-	    @OneToMany(mappedBy = "annonce_id",cascade = CascadeType.ALL,orphanRemoval = true)
-		private List<Photo> photos;
+	   
+	    @OneToOne
+		@JoinColumn(name = "post_photo", referencedColumnName = "id")
+		private Photo photo;
 	    
 	    @OneToMany(mappedBy = "annonce_id",cascade = CascadeType.ALL,orphanRemoval = true)
   	    private List<ACommentaire> comments ;
 
-	    
-	    public List<Photo> getPhotos() {
-			return photos;
+	    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+		@JoinTable(name = "favoris", joinColumns = @JoinColumn(name = "annonce_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+		Set<Utilisateur> users_favoris;
+
+	    public Photo getPhoto() {
+			return photo;
 		}
-		public void setPhotos(List<Photo> photos) {
-			this.photos = photos;
+		public void setPhoto(Photo photo) {
+			this.photo = photo;
 		}
 		public Utilisateur getUser_id() {
 			return user_id;
 		}
-		
+		 public Set<Utilisateur> getUsers_favoris() {
+				return users_favoris;
+			}
+			public void setUsers_favoris(Set<Utilisateur> users_favoris) {
+				this.users_favoris = users_favoris;
+			}
 	    
 		public List<ACommentaire> getComments() {
 			return comments;
@@ -62,14 +75,17 @@ public class Annonce {
 		public void setComments(List<ACommentaire> comments) {
 			this.comments = comments;
 		}
-		public Annonce(String content, String title, String location,Utilisateur user, Categorie id_category) {
+		public Annonce(String content, String title, String location,Utilisateur user, Categorie id_category,Photo photo) {
 			//super();
 			this.content = content;
 			this.title = title;
 			this.location = location;
 			this.user_id = user;
 			this.id_category = id_category;
-			this.photos=new ArrayList();
+			this.photo=photo;
+			this.comments=new ArrayList();
+			
+
 			this.date=new Date();
 		}
 		public Annonce() {

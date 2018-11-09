@@ -45,7 +45,7 @@ $("#updateProfile").click(function() {
 				swal({
 					  position: 'top-end',
 					  type: 'success',
-					  title: 'Votre XXX est Enregistré ',
+					  title: 'Modification Enregistre ',
 					  showConfirmButton: false,
 					  timer: 2000
 					});
@@ -83,14 +83,14 @@ $("#changePassword").click(function() {
 				swal({
 					  position: 'top-end',
 					  type: 'error',
-					  title: 'INVALID_OLD_PW :)'
+					  title: 'Ancien mot de passe est invalide'
 					});
 
 			}else if(data == "INVALID_NEW_PW"){
 				swal({
 					  position: 'top-end',
 					  type: 'error',
-					  title: 'INVALID_NEW_PW :)'
+					  title: 'Le noveau mot de passe est invalide'
 					});
 			}
 			

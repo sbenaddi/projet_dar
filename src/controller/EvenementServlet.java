@@ -76,7 +76,7 @@ public class EvenementServlet extends HttpServlet {
 
 			event.updateEvent(id, content, title, location);
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/myevents.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/myevents.jsp");
 			dispatcher.forward(request, response);
 			break;
 
@@ -96,7 +96,7 @@ public class EvenementServlet extends HttpServlet {
 	    InputStream fileContent = filePart.getInputStream();
 	   bytes = IOUtils.toByteArray(fileContent);}
 		event.addEvent(email,description, title, location, date,bytes);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/event.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/event.jsp");
 		dispatcher.forward(request, response);
 
 		break;
@@ -166,7 +166,7 @@ public class EvenementServlet extends HttpServlet {
 			System.out.println("je suis dans delete");
 			int id = Integer.parseInt(request.getParameter("id"));
 			event.deleteEvent(id);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/myevents.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/myevents.jsp");
 			dispatcher.forward(request, response);
 			/*
 			 * response.setContentType("application/json;charset=UTF-8"); List<Annonce>

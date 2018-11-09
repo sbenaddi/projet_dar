@@ -1,5 +1,8 @@
 @CHARSET "UTF-8";
 
+#iframe-content{
+	margin :20px;
+}
 #search {
 	width: 250px;
 	margin: 0 auto;
@@ -54,4 +57,8 @@ span {
 	
 	
 }
+
+
+
+
 

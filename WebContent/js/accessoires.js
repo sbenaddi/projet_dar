@@ -15,7 +15,7 @@ function submitKey() {
 					$('#result').empty();
 					$('#pagination').empty();
 					$("#loading")
-							.append("<image src='img/loading.gif'></image>");
+							.append("<image src='../img/loading.gif'></image>");
 				},
 				"success" : function(items) {
 						$("#loading").empty();

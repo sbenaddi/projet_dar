@@ -39,16 +39,12 @@ public class UserServlet extends HttpServlet {
 	public static final String CHAMP_NUMBERPHONE = "numberphone";
 
 	public static final String CHAMP_USERID = "userId";
-	
+
 	public static final String CHAMP_CURRENTPW = "currentPassword";
 	public static final String CHAMP_NEWPW = "newPassword";
 	public static final String CHAMP_NEWPW2 = "newPassword2";
-	
+
 	private UtilsService utilsService = new UtilsService();
-	
-	
-	
-	
 
 	/**
 	 * Default constructor.
@@ -60,8 +56,6 @@ public class UserServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utilisateur user = (Utilisateur) session.getAttribute("currentUser");
 		request.setAttribute("user", user);
-		// RequestDispatcher dispatcher = request.getRequestDispatcher("/test.jsp");
-		// dispatcher.forward(request, response);
 
 		UtilisateurVo userVo = new UtilisateurVo();
 		if (user != null) {
@@ -78,26 +72,11 @@ public class UserServlet extends HttpServlet {
 	public UserServlet() {
 	}
 
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 * 
-	 *      public void init(ServletConfig config) throws ServletException { // TODO
-	 *      Auto-generated method stub
-	 *      System.out.println("!!!!!!!!!!!!! init Servlet User"); ServletContext
-	 *      context = config.getServletContext(); jsp =
-	 *      context.getRequestDispatcher("/WEB-INF/jsp/accueil.jsp"); }
-	 */
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Utilisateur user = (Utilisateur) session.getAttribute("currentUser");
 		request.setAttribute("user", user);
-		
 
 		// doGet(request, response);
 		/* Récupération des champs du formulaire. */
@@ -123,32 +102,31 @@ public class UserServlet extends HttpServlet {
 			user.setInterest(interest);
 			userDao.saveUser(user);
 			session.setAttribute("currentUser", user);
-		}else if ("changePassword".equals(actionId)) {
+		} else if ("changePassword".equals(actionId)) {
 			String output = "";
 			String currentPassword = request.getParameter(CHAMP_CURRENTPW);
 			String newPassword = request.getParameter(CHAMP_NEWPW);
 			String newPassword2 = request.getParameter(CHAMP_NEWPW2);
-			if(currentPassword == null || !utilsService.verifyHash(currentPassword, user.getPassword())) {
-				output = "INVALID_OLD_PW"; 
-			}else if(newPassword == null || newPassword2 == null || !newPassword.equals(newPassword2) ) {
+			if (currentPassword == null || !utilsService.verifyHash(currentPassword, user.getPassword())) {
+				output = "INVALID_OLD_PW";
+			} else if (newPassword == null || newPassword2 == null || !newPassword.equals(newPassword2)) {
 				output = "INVALID_NEW_PW";
-			}else {
+			} else {
 				output = "SUCCESS";
 				user.setPassword(utilsService.hash(newPassword2));
 				userDao.saveUser(user);
 				session.setAttribute("currentUser", user);
 			}
-			
+
 			response.setContentType("text/html;charset=UTF-8");
 			ServletOutputStream out = response.getOutputStream();
 			out.print(output);
-			
-			
+
 		} else {
 			Utilisateur utilisateur = new Utilisateur();
 			utilisateur.setName(name);
 			utilisateur.setEmail(email);
-			utilisateur.setPassword(password);
+			utilisateur.setPassword(utilsService.hash(password));
 			utilisateur.setAbout(about);
 			utilisateur.setInterest(interest);
 			utilisateur.setOccupation(occupation);
@@ -162,7 +140,7 @@ public class UserServlet extends HttpServlet {
 			request.setAttribute(CHAMP_OCCUPATION, occupation);
 			request.setAttribute(CHAMP_NUMBERPHONE, numberphone);
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/login.jsp");
 			dispatcher.forward(request, response);
 		}
 
@@ -177,11 +155,11 @@ public class UserServlet extends HttpServlet {
 		String description = request.getParameter("description");
 		if ("updateImg".equals(actionId)) {
 			/* Update Imqge */
-			Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+			Part filePart = request.getPart("file");
+			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 			InputStream fileContent = filePart.getInputStream();
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/test.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/acceuil.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -190,7 +168,7 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 	}
 
 }

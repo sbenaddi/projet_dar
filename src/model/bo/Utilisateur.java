@@ -1,5 +1,6 @@
 package model.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,15 +11,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "USER_TABLE")
 public class Utilisateur {
+
+	
 
 	@Id
 	@GeneratedValue
@@ -29,30 +30,42 @@ public class Utilisateur {
 	private String name;
 	@Column(unique = true)
 	private String email;
+	public List<Annonce> getPosts_favoris() {
+		return posts_favoris;
+	}
+
+	public void setPosts_favoris(List<Annonce> posts_favoris) {
+		this.posts_favoris = posts_favoris;
+	}
+
 	private String password;
 	private String numberphone;
 	private String about;
 	private String Occupation;
 	private String interest;
 	
-	@Expose(serialize = false)
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "AVATAR_ID", nullable = true)
 	private Avatar avatar;
 	
 	
-	@Expose(serialize = false)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user_id", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Annonce> annonces;
-	
-	@Expose(serialize = false)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user_id", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Evenement> evenements;
 
-	@Expose(serialize = false)
 	@ManyToMany(mappedBy = "users_inter")
 	private List<Evenement> events_inter;
-
+	
+	@ManyToMany(mappedBy = "users_favoris")
+	private List<Annonce> posts_favoris;
+	public Utilisateur() {
+		super();
+		posts_favoris=new ArrayList();
+		evenements=new ArrayList();
+		annonces=new ArrayList();
+		// TODO Auto-generated constructor stub
+	}
 	public List<Evenement> getEvenements() {
 		return evenements;
 	}
@@ -61,6 +74,8 @@ public class Utilisateur {
 		this.evenements = evenements;
 	}
 	public List<Annonce> getAnnonces() {
+		if(annonces==null)
+			annonces=new ArrayList();
 		return annonces;
 	}
 

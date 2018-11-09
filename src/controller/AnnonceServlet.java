@@ -39,16 +39,30 @@ public class AnnonceServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// doGet(request, response);
+		
 		HttpSession session = request.getSession();
 		Utilisateur user = (Utilisateur)session.getAttribute("currentUser"); 
 		String email = user.getEmail();
-		System.out.println(user.getEmail());
-
+		
 		AnnonceDao annonce = new AnnonceDao();
 		String action = request.getParameter("action");
-		System.out.println("je suis dans la servlet" + action);
+		System.out.println("je suis dans la servlet" + action + "pppppp" +email);
 		switch (action) {
+
+		case "like": {
+			System.out.println("je suis dans like");
+			long a = Long.parseLong(request.getParameter("id"));
+			annonce.add_favoris(a, email);
+		
+			break;
+		}
+		case "dislike": {
+			// System.out.println("je suis dans like");
+			long a = Long.parseLong(request.getParameter("id"));
+			annonce.delete_favoris(a, email);
+			
+			break;
+		}		
 		case "update": {
 			// modifier
 			Long id = Long.parseLong(request.getParameter("id"));
@@ -58,7 +72,7 @@ public class AnnonceServlet extends HttpServlet {
 
 			annonce.updateAnnonce(id, content, title, location);
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/myannonce.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/myposts.jsp");
 			dispatcher.forward(request, response);
 			break;
 
@@ -69,41 +83,30 @@ public class AnnonceServlet extends HttpServlet {
 			String title = request.getParameter("title");
 			String location = request.getParameter("location");
 			String categorie = request.getParameter("categorie");
-			Part filePart[]=new Part[3];
-			List<byte[]>photos=new <byte[]>ArrayList();
-			String name[]= {"file1","file2","file3"};
 			
-			 InputStream fileContent=null;
-			for(int i=0;i<3;i++) {
-				filePart[i]= request.getPart(name[i]);
-				 if(!(Paths.get(filePart[i].getSubmittedFileName()).getFileName().toString().equals(""))) {
-					 fileContent= filePart[i].getInputStream();
-						
-					    photos.add(IOUtils.toByteArray(fileContent));	
-				 }
-					 
-				   
-				    }
-			System.out.println(photos.size());
+			Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
+		    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+		    InputStream fileContent = filePart.getInputStream();
+		    byte[] bytes = IOUtils.toByteArray(fileContent);
 		
-		   
-			//System.out.println("le putain de mail"+fileName);
 
-			annonce.addAnnonce(email, content, title, location, categorie,photos);
+			// System.out.println("le putain de mail"+fileName);
 
-		
+			annonce.addAnnonce(email, content, title, location, categorie, bytes);
+
 			System.out.println("add_annonce servlet" + content + " " + title + " " + location + " " + categorie);
-			
-		/*	response.setContentType("application/json;charset=UTF-8");
-			
-			JSONArray jsonArray = new JSONArray(posts);
 
-			String jsonStr = jsonArray.toString();
-			response.setHeader("Cache-Control", "no-cache");
-
-			PrintWriter out = response.getWriter();
-			out.write(jsonStr);*/
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/annonce.jsp");
+			/*
+			 * response.setContentType("application/json;charset=UTF-8");
+			 * 
+			 * JSONArray jsonArray = new JSONArray(posts);
+			 * 
+			 * String jsonStr = jsonArray.toString(); response.setHeader("Cache-Control",
+			 * "no-cache");
+			 * 
+			 * PrintWriter out = response.getWriter(); out.write(jsonStr);
+			 */
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/myposts.jsp");
 			dispatcher.forward(request, response);
 			break;
 
@@ -112,22 +115,15 @@ public class AnnonceServlet extends HttpServlet {
 			System.out.println("je suis dans delete");
 			Long id = Long.parseLong(request.getParameter("id"));
 			annonce.deleteAnnonce(id);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/annonce.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/myposts.jsp");
 			dispatcher.forward(request, response);
-			/*
-			 * response.setContentType("application/json;charset=UTF-8"); List<Annonce>
-			 * posts = annonce.displayAnnonce(); JSONArray jsonArray = new JSONArray(posts);
-			 * 
-			 * String jsonStr = jsonArray.toString(); System.out.println(jsonStr);
-			 * PrintWriter out = response.getWriter(); out.println(jsonStr);
-			 */
+		
 			break;
 
 		}
 		case "display_all": {
 
 			response.setContentType("application/json;charset=UTF-8");
-
 
 			List<Object> posts = annonce.displayAnnonce();
 			JSONArray jsonArray = new JSONArray(posts);
@@ -153,23 +149,20 @@ public class AnnonceServlet extends HttpServlet {
 			JSONArray jsonArray = new JSONArray(posts);
 
 			String jsonStr = jsonArray.toString();
-			System.out.println(jsonStr);
 			PrintWriter out = response.getWriter();
 			out.println(jsonStr);
 
 			break;
 		}
-		case "search_annonce":{
+		
+		case "filtrer": {
+
+			System.out.println("je suis dans le filtre");
 			
-			System.out.println("je suis dans la recherche");
-			String categorie = request.getParameter("by_categorie");
-			String adresse = request.getParameter("by_adress");
-			String word = request.getParameter("by_keyword");
-			System.out.println(word+"**"+categorie+"**"+adresse);
-			// email=request.getParameter("email");
-			
-			response.setContentType("application/json;charset=UTF-8");
-			List<Object> posts = annonce.searchAnnonce(categorie,adresse,word);
+			String categorie = request.getParameter("categorie");
+			System.out.println("coucou" + categorie);
+
+			List<Object> posts = annonce.filtrer_annonce(categorie);
 			JSONArray jsonArray = new JSONArray(posts);
 
 			String jsonStr = jsonArray.toString();
@@ -180,11 +173,43 @@ public class AnnonceServlet extends HttpServlet {
 
 			break;
 		}
+		case "display_annonce": {
+			long id = Long.parseLong(request.getParameter("id"));
+			// System.out.println("coucou"+categorie);
+
+			List<Object> posts = annonce.afficher_annonce(id);
+			JSONArray jsonArray = new JSONArray(posts);
+
+			String jsonStr = jsonArray.toString();
+			response.setHeader("Cache-Control", "no-cache");
+
+			PrintWriter out = response.getWriter();
+			out.write(jsonStr);
+
+			break;
+		}
+		case "search_annonce": {
+			response.setContentType("application/json;charset=UTF-8");
+
+			System.out.println("je suis dans la recherche");
+
+			String word = request.getParameter("search");
+			System.out.print("coucou" + word);
+
+			List<Object> posts = annonce.search_annonce(word);
+			JSONArray jsonArray = new JSONArray(posts);
+
+			String jsonStr = jsonArray.toString();
+			response.setHeader("Cache-Control", "no-cache");
+			PrintWriter out = response.getWriter();
+			out.write(jsonStr);
+
+			break;
+		}
 		default: {
 			System.out.println("khraaaaaaaaa");
 		}
 		}
 	}
-	
 
 }

@@ -25,18 +25,12 @@ public class LoginServlet extends HttpServlet {
 	private UtilsService utilsService = new UtilsService();
 
 	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
-		System.out.println("!!!!!!!!!!!!! init Servlet Login");
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("GET LoginServlet");
-		request.setAttribute(CHAMP_EMAIL, "email");
-		request.setAttribute("name", utilsService.hash("souka"));
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/test.jsp");
-		dispatcher.forward(request, response);
+
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -49,16 +43,19 @@ public class LoginServlet extends HttpServlet {
 		}else {
 			UtilisateurDao utildao = new UtilisateurDao();
 			Utilisateur user = utildao.getUserByUserId(email);
+			
+			//Verification du hashage du mot de passe
+			
 			if(user != null && utilsService.verifyHash(password, user.getPassword())) {
 				session.setAttribute("currentUser", user);
 				request.setAttribute(CHAMP_EMAIL, email);
 				request.setAttribute("name", user.getName());
 				request.setAttribute("id", user.getId());
 				request.setAttribute("user", user);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/test.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/acceuil.jsp");
 				dispatcher.forward(request, response);
 			} else {
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/erreur.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/erreur.jsp");
 				dispatcher.forward(request, response);
 			}
 		}
