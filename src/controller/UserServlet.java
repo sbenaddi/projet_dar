@@ -121,7 +121,7 @@ public class UserServlet extends HttpServlet {
 			user.setEmail(email);
 			user.setOccupation(occupation);
 			user.setInterest(interest);
-			userDao.saveDetails(user);
+			userDao.saveUser(user);
 			session.setAttribute("currentUser", user);
 		}else if ("changePassword".equals(actionId)) {
 			String output = "";
@@ -135,7 +135,7 @@ public class UserServlet extends HttpServlet {
 			}else {
 				output = "SUCCESS";
 				user.setPassword(utilsService.hash(newPassword2));
-				userDao.saveDetails(user);
+				userDao.saveUser(user);
 				session.setAttribute("currentUser", user);
 			}
 			
@@ -145,7 +145,15 @@ public class UserServlet extends HttpServlet {
 			
 			
 		} else {
-			userDao.saveDetails(name, email, password, about, interest, occupation, numberphone);
+			Utilisateur utilisateur = new Utilisateur();
+			utilisateur.setName(name);
+			utilisateur.setEmail(email);
+			utilisateur.setPassword(password);
+			utilisateur.setAbout(about);
+			utilisateur.setInterest(interest);
+			utilisateur.setOccupation(occupation);
+			utilisateur.setNumberphone(numberphone);
+			userDao.saveUser(utilisateur);
 			request.setAttribute(CHAMP_NAME, name);
 			request.setAttribute(CHAMP_PASSWORD, password);
 			request.setAttribute(CHAMP_EMAIL, email);

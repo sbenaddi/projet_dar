@@ -9,35 +9,7 @@ import utils.HibernateUtil;
 
 public class UtilisateurDao {
 
-	public boolean saveDetails(String name, String email, String password, String about, String interest,
-			String occupation, String numberphone) {
-
-		boolean flag = true;
-		Session session = HibernateUtil.openSession();
-		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setName(name);
-		utilisateur.setEmail(email);
-		utilisateur.setPassword(password);
-		utilisateur.setAbout(about);
-		utilisateur.setInterest(interest);
-		utilisateur.setOccupation(occupation);
-		utilisateur.setNumberphone(numberphone);
-
-		Transaction transaction = session.beginTransaction();
-		try {
-			session.save(utilisateur);
-			transaction.commit();
-		} catch (Exception e) {
-			transaction.rollback();
-			flag = false;
-
-		}
-		session.close();
-		return flag;
-	}
-	
-	public boolean saveDetails(Utilisateur user) {
-
+	public boolean saveUser(Utilisateur user) {
 		boolean flag = true;
 		Session session = HibernateUtil.openSession();
 		Transaction transaction = session.beginTransaction();
@@ -47,7 +19,6 @@ public class UtilisateurDao {
 		} catch (Exception e) {
 			transaction.rollback();
 			flag = false;
-
 		}
 		session.close();
 		return flag;
@@ -74,8 +45,7 @@ public class UtilisateurDao {
 		}
 		return user;
 	}
-	
-	
+
 	public Utilisateur getUserByUserId(int id) {
 		Session session = HibernateUtil.openSession();
 		Transaction tx = null;
