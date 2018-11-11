@@ -144,5 +144,5 @@ $(document).ready(function() {
 				obj.src = "updateprofile.jsp";
 				menu('li_updateprofile');
 			});
-
+			
 		})

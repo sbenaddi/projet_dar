@@ -63,21 +63,20 @@
 			<div class="top-menu">
 				<ul class="nav navbar-nav pull-right">
 					<!-- BEGIN NOTIFICATION DROPDOWN -->
-					<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+					<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte 
+					notification.jsp
+					-->
 					<li class="dropdown dropdown-extended dropdown-notification"
-						id="header_notification_bar"><a href="javascript:;"
+						id="li_notification"><a href="javascript:;"
 						class="dropdown-toggle" data-toggle="dropdown"
 						data-hover="dropdown" data-close-others="true"> <i
-							class="icon-bell"></i> <span class="badge badge-default">
-								7 </span>
+							class="icon-bell"></i> 
+							<span id="notificationnumber" class="badge badge-default"></span>
 					</a>
-						<ul class="dropdown-menu">
-							<li class="external">
-								<h3>
-									<span class="bold">12 pending</span> notifications
-								</h3> <a href="extra_profile.html">view all</a>
-							</li>
-						</ul></li>
+						<ul id="notificationcontent" class="dropdown-menu">
+							
+						</ul>             
+					</li>
 					<!-- END NOTIFICATION DROPDOWN -->
 					<!-- BEGIN INBOX DROPDOWN -->
 					<!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
@@ -248,6 +247,7 @@
 	<script src="../assets/admin/pages/scripts/contact-us.js"></script>
 	<script src="../js/acceuil.js"></script>
 	<script
-		src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.11/dist/sweetalert2.all.min.js"></script>
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.11/dist/sweetalert2.all.min.js"></script>	
+	<script type="text/javascript" src="../js/websocket.js"></script>
 </body>
 </html>

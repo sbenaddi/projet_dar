@@ -49,6 +49,7 @@ $("#updateProfile").click(function() {
 					  showConfirmButton: false,
 					  timer: 2000
 					});
+				parent.check_status();
 			}
 		});	
 });

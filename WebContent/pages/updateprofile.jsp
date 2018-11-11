@@ -243,7 +243,7 @@
 		
 		<script src="../js/updateProfile.js"
 		type="text/javascript"></script>
-		
+
     <script src="../js/plugins/sweetalert2.all.min.js" type="text/javascript"></script>
 	<!-- END PAGE LEVEL SCRIPTS -->
 	<script>

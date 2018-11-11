@@ -1,13 +1,14 @@
 package test;
 
-import org.junit.FixMethodOrder;
-import org.junit.runners.MethodSorters;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import model.bo.Utilisateur;
 import model.dao.UtilisateurDao;

@@ -6,7 +6,7 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/projet_dar</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.connection.password">Vva#eTqq</property>
         <property name="show_sql">true</property>      
         <property name="hbm2ddl.auto">update</property>
         <mapping class="model.bo.Utilisateur" />
@@ -19,6 +19,8 @@
          <mapping class="model.bo.Evenement" />
          <mapping class="model.bo.Photo" />
         <mapping class="model.bo.PhotoEvent" />
+        <mapping class="model.bo.Notification" />
+        
         
     </session-factory>
 </hibernate-configuration>

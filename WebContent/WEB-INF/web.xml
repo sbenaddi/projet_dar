@@ -7,6 +7,11 @@
 	<welcome-file-list>
 		<welcome-file>index</welcome-file>
 	</welcome-file-list>
+	
+	<listener>  
+	  	<listener-class>listener.WebContextListener</listener-class>  
+	</listener> 
+	
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>controller.LoginServlet</servlet-class>
@@ -31,6 +36,16 @@
 		<servlet-name>MailServlet</servlet-name>
 		<servlet-class>controller.MailServlet</servlet-class>
 	</servlet>
+	
+		<servlet>
+		<servlet-name>NotificationServlet</servlet-name>
+		<servlet-class>controller.NotificationServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>NotificationServlet</servlet-name>
+		<url-pattern>/notification</url-pattern>
+	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>

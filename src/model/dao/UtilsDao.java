@@ -1,9 +1,13 @@
 package model.dao;
 
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import model.bo.Avatar;
+import model.bo.Notification;
 import model.bo.Utilisateur;
 import utils.HibernateUtil;
 
@@ -33,7 +37,40 @@ public class UtilsDao {
 		}
 		session.close();
 		return user;
-		
 	}
+	
+	public List<Notification> getNotifications(){
+		Session session = HibernateUtil.openSession();
+		Query q = session.createQuery("from Notification order by id desc");
+			//	.setParameter("id_user_destination", id);
+		List<Notification> notifications = q.list();
+		Transaction transaction = session.beginTransaction();
+		transaction.commit();
+		session.close();
+		return notifications;
+	}
+	
+	public Notification saveNotification(Notification notification) {
+		Session session = HibernateUtil.openSession();
+		Transaction transaction = session.beginTransaction();
+		try {
+			session.saveOrUpdate(notification);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		}
+		session.close();
+		return notification;
+	}
+	
+	public void deleteNotification(Long id) {
+		Session session = HibernateUtil.openSession();
+		Query q = session.createQuery("delete from Notification where id= :id ");
+		q.setParameter("id", id);
+		q.executeUpdate();
+		session.close();
+	}
+	
+	
 
 }

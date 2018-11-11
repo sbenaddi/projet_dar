@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,8 +16,10 @@ import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 
+import model.bo.Notification;
 import model.bo.Utilisateur;
 import model.dao.UtilisateurDao;
+import model.dao.UtilsDao;
 import model.service.UtilsService;
 import model.vo.UtilisateurVo;
 
@@ -26,7 +29,6 @@ import model.vo.UtilisateurVo;
 
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private RequestDispatcher jsp;
 
 	public static final String CHAMP_ACTION_ID = "actionId";
 	public static final String CHAMP_NAME = "name";
@@ -45,7 +47,8 @@ public class UserServlet extends HttpServlet {
 	public static final String CHAMP_NEWPW2 = "newPassword2";
 
 	private UtilsService utilsService = new UtilsService();
-
+	private UtilsDao utilsDao = new UtilsDao();
+	
 	/**
 	 * Default constructor.
 	 */
@@ -102,6 +105,9 @@ public class UserServlet extends HttpServlet {
 			user.setInterest(interest);
 			userDao.saveUser(user);
 			session.setAttribute("currentUser", user);
+			Notification notification = new Notification("Modification de profil "+user.getName(), "TYPE_1", new Date(), id);
+			utilsDao.saveNotification(notification);
+			
 		} else if ("changePassword".equals(actionId)) {
 			String output = "";
 			String currentPassword = request.getParameter(CHAMP_CURRENTPW);
@@ -116,6 +122,8 @@ public class UserServlet extends HttpServlet {
 				user.setPassword(utilsService.hash(newPassword2));
 				userDao.saveUser(user);
 				session.setAttribute("currentUser", user);
+				Notification notification = new Notification("Modification mot de passe", "TYPE_1", new Date(), user.getId());
+				utilsDao.saveNotification(notification);
 			}
 
 			response.setContentType("text/html;charset=UTF-8");

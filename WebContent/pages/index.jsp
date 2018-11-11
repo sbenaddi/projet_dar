@@ -25,7 +25,7 @@
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
 <link href="../css/grayscale.min.css" rel="stylesheet">
-<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
 </head>
 
 <body id="page-top">
@@ -62,15 +62,17 @@
 			</div>
 		</div>
 	</header>
-	<section>
-		<%@ page import="java.util.List"%>
-		<%@ page import="model.bo.Comment"%>
-		<%@ page import="java.util.ArrayList"%>
+	<%@ page import="java.util.List"%>
+	<%@ page import="model.bo.Comment"%>
+	<%@ page import="java.util.ArrayList"%>
 
-		<%!List<Comment> comments = new ArrayList<Comment>();%>
-		<%
-			comments = (List<Comment>) request.getAttribute("listeComments");
-		%>
+	<%!List<Comment> comments = new ArrayList<Comment>();%>
+	<%
+		comments = (List<Comment>) request.getAttribute("listeComments");
+	%>
+	<c:if test = "${comments !=null && comments.getSize()>=1 }">
+	<section>
+		
 		<div class="container">
 			<div class="row align-items-center">
 				<div class="col-lg-6 order-lg-2">
@@ -102,7 +104,9 @@
 			</div>
 		</div>
 	</section>
+	</c:if>
 
+	<c:if test = "${comments !=null && comments.getSize()>=2 }">
 	<section>
 		<div class="container">
 			<div class="row align-items-center">
@@ -134,7 +138,8 @@
 			</div>
 		</div>
 	</section>
-
+	</c:if>
+	<c:if test = "${comments !=null && comments.getSize()>=3 }">
 	<section>
 		<div class="container">
 			<div class="row align-items-center">
@@ -166,7 +171,8 @@
 			</div>
 		</div>
 	</section>
-
+	</c:if>
+<br>
 	<!-- Contact Section -->
 	<section id="signup">
 		<div class="container wow fadeInUp">
@@ -254,6 +260,7 @@
 
 		</div>
 	</section>
+	<br>
 	<!-- #contact -->
 
 	<!-- Footer -->

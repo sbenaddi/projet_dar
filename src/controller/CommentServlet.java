@@ -45,7 +45,7 @@ public class CommentServlet extends HttpServlet {
 		
 		//Affichage de la liste des commentaires dans le Portail index
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/index.jsp");
 		dispatcher.forward(request, response);
 
 	}
